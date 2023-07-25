@@ -4,9 +4,11 @@ import GetCrypto from '../components/GetCrypto'
 
 
 
+
 function Home() {
     return (
         <div className="container mt-3 mb-5">
+
         <GetCrypto></GetCrypto>
        
             

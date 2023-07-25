@@ -3,11 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 
 import Home from './views/Home'
-import Navigation from './components/Navigation'
-
-
-
 import { BrowserRouter as Router, Routes, Route,Link  } from 'react-router-dom';
+import Navigation from './components/Navigation';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -21,6 +19,7 @@ function App() {
             
             </Routes>
         </Router> 
+        <Footer />
       
 
     </div>
