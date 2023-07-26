@@ -17,7 +17,7 @@ status: working
 import { useLocation } from 'react-router-dom';
 import { useState,useEffect } from "react"
 import axios from 'axios'
-import Cryptoimage from '../assets/crypto-image.jpeg'
+import Cryptoimage from '../assets/crypto-image-narrow.jpg'
 
 
 function Cryptonews(){

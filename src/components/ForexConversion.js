@@ -16,7 +16,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts/highstock'
 import LineChart from 'highcharts-react-official'
-import forexImage from '../assets/forex.jpeg'
+import forexImage from '../assets/forex_narrow.jpg'
 
 function ForexConversion(){
     const initialValue = 1;
@@ -27,17 +27,19 @@ function ForexConversion(){
     const[priceCurrency,setpriceCurrency] = useState("USD - United States Dollar")
     const[priceCurrencySymbol,setpriceCurrencySymbol] = useState("USD")
     const[valueToConvert, setValueToConvert] = useState(initialValue);//value to be converted
-    
+    const[graphCurrency, setGraphCurrency] = useState("")
+
+
     const[convertedValue, setConvertedValue] = useState("")
     const[timeSeriesData, setTimeSeriesData] = useState([])
     const[latestPrices,setLatestPrices] = useState([])
     const[exchangeRate, setExchangeRate] = useState([])
 
-    const[apiRequestOptions,setApiRequestOptions] = useState("")
+
 
     //start and end date of historical prices for linechart
-    const[startDate,setStartDate] = useState("2022-07-25")//hardcoded for debugging&testing
-    const[endDate,setEndDate] = useState("2023-07-25")//hardcoded for debugging&testing
+    const[startDate,setStartDate] = useState("")//hardcoded for debugging&testing
+    const[endDate,setEndDate] = useState("")//hardcoded for debugging&testing
 
     const[timeSeriesDates,setTimeSeriesDates] = useState([]);
     const[timeSeriesPrices,setTimeSeriesPrices] = useState([])
@@ -47,9 +49,28 @@ function ForexConversion(){
     // Get latest proces and timeseriesdata on loading
     useEffect(() => {
         getlatestPrices();
-        getTimeSeriesData();
+        getDate()
+        //getTimeSeriesData();
         
         }, []);
+
+      async function getDate(){
+
+        //set start date to 12 months ago
+        const todaysDate = new Date();
+        const month = String(todaysDate.getUTCMonth()+1).padStart(2,'0');
+        const year = todaysDate.getFullYear();
+        const previousYear = todaysDate.getFullYear()-1;
+        const day = String(todaysDate.getUTCDate()).padStart(2,'0')
+        console.log("Date month : "+ previousYear +"-"+month+'-'+ day)
+
+        setStartDate(previousYear +"-"+month+'-'+ day);
+        setEndDate(year +"-"+month+'-'+ day);
+
+
+
+      
+      }
       
       async function getTimeSeriesData() {
         try {
@@ -60,8 +81,8 @@ function ForexConversion(){
         method: 'GET',
         url: 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/timeseries',
         params: {
-          start_date: '2022-07-25',
-          end_date: '2023-07-25',
+          start_date: startDate,
+          end_date: endDate,
           from: 'EUR',
           to: priceCurrency
         },
@@ -81,6 +102,8 @@ function ForexConversion(){
           console.log(response.data.rates);
           console.log("start date: " + startDate)
           console.log("end date: " , endDate)
+
+          
 
          
             // Extract entries from returned object
@@ -105,6 +128,10 @@ function ForexConversion(){
 
             setTimeSeriesDates(dates);
             setTimeSeriesPrices(prices);
+
+            setGraphCurrency(priceCurrency);
+
+            
            
 
             
@@ -142,6 +169,8 @@ function ForexConversion(){
             console.log("response")
             console.log(response.data)
             setLatestPrices(response.data.rates)
+    
+            
                   
 
         } catch (error) {
@@ -218,8 +247,9 @@ function ForexConversion(){
         setpriceCurrency(e.target.value)
         console.log("price test: " + priceCurrency)
         setpriceCurrencySymbol(getKeyByValue(currencyTable,e.target.value))
-        getTimeSeriesData();
+        //getTimeSeriesData();
         getlatestPrices();
+      
     }
 
 
@@ -264,12 +294,12 @@ function ForexConversion(){
       const graphConfig= {
 
         title: {
-            text: 'Historical Prices',
+            text: 'Historical Prices 12 month : ' + graphCurrency,
             align: 'left'
         },
     
         subtitle: {
-            text: 'Historical Prices',
+            text: '',
             align: 'left'
         },
     
@@ -322,6 +352,7 @@ function ForexConversion(){
 
 return(<div className="container-fluid">
             <div className="row">
+     
             <img src={forexImage} class="img-fluid" alt="forex Image"/>
             
             
@@ -356,7 +387,12 @@ return(<div className="container-fluid">
                         
                 </div>
                 <div className="chart">
-                <LineChart highcharts = {Highcharts} options={graphConfig} />
+                   <button className="btn btn-primary" onClick={getTimeSeriesData}>Get historical prices  </button>
+                  <div>   
+                    <LineChart highcharts = {Highcharts} options={graphConfig} />             
+                  </div>       
+                  
+                  
                 </div>
                 
 

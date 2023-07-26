@@ -13,7 +13,7 @@ This component will display the top news articles of interest which are provided
 import { useState,useEffect } from "react"
 import axios from 'axios'
 import {Link} from 'react-router-dom';
-import newsImage from '../assets/news.jpg'
+import newsImage from '../assets/news-narrow.jpg'
 
 function Articles(){
     const[articlesData, setArticlesData] = useState([])
@@ -24,7 +24,7 @@ useEffect(() => {
     }, []);
 
 //this query to api ms-finance will retrieve the top articles of interest
-//options based on code
+//options based on code example https://rapidapi.com/apidojo/api/ms-finance
 const options = {
     method: 'GET',
     url: 'https://ms-finance.p.rapidapi.com/articles/list',
@@ -39,10 +39,7 @@ const options = {
 
   async function getData(){
     try {
-        const titlesArray = [] ;
-        const picturesArray = [];
-         const articleIDArray = []
-
+       
         
         const response = await axios.request(options);
         const articleData = response.data
@@ -53,26 +50,19 @@ const options = {
         console.log(articleData);
         console.log("get data")
 
-        const articlesArray = Object.entries(articleData)
-        console.log(articlesArray)
-        //get article titles
+        
+        //get article titles and id
         const titles= articleData.map(function(title){
             
            
             return {title:title.Title,
                     id:title.Id} 
         })
-        const items = ['Item 1', 'Item 2', 'Item 3', 'Item 4']
+        
         setArticleTitles(titles) 
 
         
-        console.log(articleTitles)
-
-        
-        
-        
-         
-        
+        //console.log(articleTitles) //for debug      
     
     } catch (error) {
         console.error(error);
