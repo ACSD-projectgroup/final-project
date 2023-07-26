@@ -15,8 +15,8 @@ function Navigation() {
                     <Nav className="navbar-links">
                         <Nav.Link href="/">Home</Nav.Link>   
                         <Nav.Link href="/SearchCryptopage">Search Crypto</Nav.Link>  
-                        <Nav.Link href="/Cryptonewspage">Cryptonews</Nav.Link>
                         <Nav.Link href="/Forexpage">Currency Converter</Nav.Link>
+                        <Nav.Link href="/Cryptonewspage">Cryptonews</Nav.Link>
                         <Nav.Link href="/Stocknewspage">Stock News</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
