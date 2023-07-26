@@ -4,7 +4,7 @@ import React from "react";
 function ShowCrypto(props) {
     
     return (
-        <div className="container  mt-2">
+        <div className="container pt-2 pb-2 mt-2">
 
             <div className="row  border-bottom rounded p-2 mt-4">
                 {/*} Had to use inline css on this image, as style would not apply from app.css when image was inside row{*/}
@@ -15,7 +15,6 @@ function ShowCrypto(props) {
                 {props.dailyPercentage > 0 ? (<p className="col textCenter"><span class ="textBold">24hr </span><span className="textGreen">{props.dailyPercentage}%</span></p>):
                 (<p className="col textCenter"><span class ="textBold">24hr </span><span class="textRed">{props.dailyPercentage}%</span></p>)}
                 <p className="col textCenter"><span class ="textBold">Market Rank: </span>{props.marketCap}</p>
-                
             </div>
             <script>changeColor()</script>
         </div>

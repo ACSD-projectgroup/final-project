@@ -31,6 +31,7 @@ function SearchCrypto() {
     if (displayResult == true) {
         return (
             <div className="container">
+                <h2 className="text-center m-4">Search Crypto Currencies</h2>
                 <form onSubmit={searchCoins}>
                     <InputGroup>
                         <Form.Control onChange={handleSearchQuery} onSubmit={searchCoins} placeholder="Search crypto"></Form.Control>
@@ -44,6 +45,7 @@ function SearchCrypto() {
     else{
         return(
             <div className="container">
+                <h2 className="text-center m-4">Search Crypto Currencies</h2>
                 <form onSubmit={searchCoins}>
                     <InputGroup>
                         <Form.Control onChange={handleSearchQuery} onSubmit={searchCoins} placeholder="Search crypto"></Form.Control>
