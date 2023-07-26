@@ -16,19 +16,16 @@ function SearchCrypto() {
     }
 
     async function searchCoins(e) {
-        console.log("test")
-        console.log(query)
         e.preventDefault();
         let response = await axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=" + query + "&order=market_cap_desc&per_page=100&page=1&sparkline=true&locale=en")
         console.log(response.data)
         setCoinData(response.data[0]);
-        console.log("test2")
         console.log(coinData)
         setDisplayResult(true)
     }
 
-    //there's no need to map, you're pulling only one coin. 
-    if (displayResult == true) {
+
+    if (displayResult == true && coinData != undefined) {
         return (
             <div className="container">
                 <h2 className="text-center m-4">Search Crypto Currencies</h2>
@@ -42,8 +39,22 @@ function SearchCrypto() {
             </div>
         )
     }
-    else{
-        return(
+    else if (coinData == undefined) {
+        return (
+            <div className="container">
+                <h2 className="text-center m-4">Search Crypto Currencies</h2>
+                <form onSubmit={searchCoins}>
+                    <InputGroup>
+                        <Form.Control onChange={handleSearchQuery} onSubmit={searchCoins} placeholder="Search crypto"></Form.Control>
+                    </InputGroup>
+                    <h3>Please enter a vlaid search item!</h3>
+
+                </form>
+            </div>
+        )
+    }
+    else {
+        return (
             <div className="container">
                 <h2 className="text-center m-4">Search Crypto Currencies</h2>
                 <form onSubmit={searchCoins}>
