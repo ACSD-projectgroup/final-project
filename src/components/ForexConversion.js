@@ -44,7 +44,7 @@ function ForexConversion(){
 
 
 
-    //First check local storage for latestprices, if not available or expired query the api
+    // Get latest proces and timeseriesdata on loading
     useEffect(() => {
         getlatestPrices();
         getTimeSeriesData();
@@ -115,7 +115,7 @@ function ForexConversion(){
         }
         
       }
-      
+      const prices = timeSeriesData;
       
       //async function retrieves conversion rate from api
       //options for querying api - https://rapidapi.com/principalapis/api/currency-conversion-and-exchange-rates
@@ -153,15 +153,6 @@ function ForexConversion(){
       // updating the converted currency value
       const exchangeR = latestPrices[priceCurrencySymbol];
  
-
-    
-
-    
-  
-    
-    
-    
-
     /* Currency List */
     const currencyList = [
         "AUD - Australian Dollar",
@@ -214,9 +205,7 @@ function ForexConversion(){
     function handleBaseCurrency(e){
         e.preventDefault()
         
-        //setBaseCurrency(e.target.value)
-        //setBaseCurrencySymbol(getKeyByValue(currencyTable,e.target.value));
-        localStorage.removeItem('latestprices')
+     
         getlatestPrices();
   
 
@@ -331,7 +320,7 @@ function ForexConversion(){
 
 
 
-return(<div className="container">
+return(<div className="container-fluid">
             <div className="row">
             <img src={forexImage} class="img-fluid" alt="forex Image"/>
             
@@ -366,7 +355,10 @@ return(<div className="container">
                         </div>
                         
                 </div>
+                <div className="chart">
                 <LineChart highcharts = {Highcharts} options={graphConfig} />
+                </div>
+                
 
             </div>
 
