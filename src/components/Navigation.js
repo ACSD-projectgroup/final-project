@@ -14,13 +14,10 @@ function Navigation() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="navbar-links">
                         <Nav.Link href="/">Home</Nav.Link>   
-                          
+                        <Nav.Link href="SearchCryptopage">Seach Crypto</Nav.Link>   
                         <Nav.Link href="/Cryptonewspage">Cryptonews</Nav.Link>
                         <Nav.Link href="/Forexpage">Currency Converter</Nav.Link>
                         <Nav.Link href="/Stocknewspage">Stock News</Nav.Link>
-                        <Nav.Link href="/fiat">Fiat</Nav.Link>
-                        <Nav.Link href="/about">About</Nav.Link>
-
                     </Nav>
                 </Navbar.Collapse>
             </Container>

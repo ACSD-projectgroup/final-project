@@ -23,10 +23,10 @@ function App() {
         <Router >         
             <Routes>
               <Route exact path="/" element={<Home />}></Route>
+              <Route path="/SearchCryptopage" element={<SearchCryptopage />}></Route>
               <Route path="/Cryptonewspage" element={<Cryptonewspage />}></Route>
               <Route path="/Forexpage" element={<Forexpage />}></Route>
               <Route path="/Stocknewspage" element={<Stocknewspage />}></Route>
-              <Route path="/SearchCryptopage" element={<SearchCryptopage />}></Route>
             </Routes>
         </Router> 
         <Footer />
