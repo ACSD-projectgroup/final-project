@@ -27,6 +27,7 @@ function ForexConversion(){
     const[priceCurrency,setpriceCurrency] = useState("USD - United States Dollar")
     const[priceCurrencySymbol,setpriceCurrencySymbol] = useState("USD")
     const[valueToConvert, setValueToConvert] = useState(initialValue);//value to be converted
+    
     const[convertedValue, setConvertedValue] = useState("")
     const[timeSeriesData, setTimeSeriesData] = useState([])
     const[latestPrices,setLatestPrices] = useState([])
@@ -42,27 +43,6 @@ function ForexConversion(){
     const[timeSeriesPrices,setTimeSeriesPrices] = useState([])
 
 
-    useEffect(() => {
-        getDate();
-      }, []);
-    async function getDate(){
-        console.log("test useState date: " + todaysDate)
-        let newDate = new Date()
-        //console.log("newDate" + newDate)
-        let date = newDate.getDate();
-        console.log("date")
-        console.log(date)
-        let month = newDate.getMonth() + 1;
-        //console.log(month)
-        
-        const month1yearago = new Date()
-        month1yearago.setMonth(newDate.getMonth()-12)
-        //console.log("1 year ago: " + month1yearago)
-
-        let year = newDate.getFullYear();
-        //console.log(year)
-        
-    }
 
     //First check local storage for latestprices, if not available or expired query the api
     useEffect(() => {
@@ -70,69 +50,7 @@ function ForexConversion(){
         getTimeSeriesData();
         
         }, []);
-        
-
-        /*
-        
-        const latestprices = JSON.parse(localStorage.getItem('latestprices'))
-        const expiry = Date.parse(localStorage.getItem('expiry')) 
-        if (latestprices && expiry && expiry > Date.now()){
-          //console.log("within expiry ")
-          setLatestPrices(latestprices)
-          console.log(latestprices)
-
-          console.log("startDatee: " + startDate)
-          
-          
-   
-          
-     
-         }
-         else{
-          console.log("expired"  )
-          getlatestPrices();}
-         
-      }, []);
-      //
-        const exchangeR = latestPrices[priceCurrencySymbol];
-      */
-
-   
-
-    //Get time series data
-    
-    
-    /*
-      //get data for linechart
-    useEffect(() => {
-        const dates = JSON.parse(localStorage.getItem('dates'))
-        const prices = JSON.parse(localStorage.getItem('prices'))
-        
-        const datesArray = [
-            '2022-07-15' ,
-             '2022-07-16' ,
-             '2022-07-17'
-       
-          ];
-        setTimeSeriesDates(datesArray);
-        console.log("local storage dates")
-        console.log(timeSeriesDates)
-        setTimeSeriesPrices(prices);
-        
-
-        const expiry = Date.parse(localStorage.getItem('expiry')) 
-        if (dates && expiry && expiry > Date.now()){
-          //console.log("within expiry ")
-               
-         }
-         else{
-          console.log("expired")
-        getTimeSeriesData();}
-        }, []);
-
-        */
-
-
+      
       async function getTimeSeriesData() {
         try {
 
@@ -164,11 +82,7 @@ function ForexConversion(){
           console.log("start date: " + startDate)
           console.log("end date: " , endDate)
 
-          //setStartDate(response.data.start_date)
-          //setEndDate(response.data.end_date)
-
-      
-
+         
             // Extract entries from returned object
             var timeSeries = Object.entries(response.data.rates);
             //localStorage.setItem('timeSeries', JSON.stringify(timeSeries))
@@ -189,25 +103,22 @@ function ForexConversion(){
             const dates = sortedArray.map(date =>date.date);
             const prices = sortedArray.map(price=>price.value);
 
-            //save time series to local storage to reduce api calls
-            //localStorage.setItem('dates', JSON.stringify(dates))
-            //localStorage.setItem('prices', JSON.stringify(prices))
-          
-             console.log("dates")
-             console.log( dates)
-             console.log("prices" + prices)
             setTimeSeriesDates(dates);
-            console.log("timeSeriesDates");
-            console.log(timeSeriesDates)
-            setTimeSeriesPrices(prices);          
+            setTimeSeriesPrices(prices);
+           
+
+            
+                      
           
             } catch (error) {
           console.error('Error:', error);
         }
         
       }
-    
+      
+      
       //async function retrieves conversion rate from api
+      //options for querying api - https://rapidapi.com/principalapis/api/currency-conversion-and-exchange-rates
       async function getlatestPrices() {
         const requestOptions= {
             method: 'GET',

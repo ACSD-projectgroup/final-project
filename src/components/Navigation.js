@@ -7,7 +7,7 @@ import Cryptonewspage from "../views/Cryptonewspage";
 
 function Navigation() {
     return (
-        <Navbar expand="lg" className="navbar sticky-top p-3 mb-3 ">
+        <Navbar expand="lg" className="navbar  p-3 mb-3 ">
             <Container>
                 <Navbar.Brand href="/"><img src={Logo}></img></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
