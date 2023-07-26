@@ -27,7 +27,6 @@ function App() {
               <Route path="/Forexpage" element={<Forexpage />}></Route>
               <Route path="/Stocknewspage" element={<Stocknewspage />}></Route>
               <Route path="/SearchCryptopage" element={<SearchCryptopage />}></Route>
-            
             </Routes>
         </Router> 
         <Footer />
