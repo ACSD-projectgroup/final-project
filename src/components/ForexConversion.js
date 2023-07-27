@@ -331,8 +331,6 @@ return(<div className="container-fluid">
                         </div>
                         <span className="currency-switch-btn"></span>
 
-                        
-
                         <div className="conversion-container">
                             <select className="form-select form-select-sm" aria-label=".form-select-sm example" onChange={handlePriceCurrency}>
                                 <option selected>{priceCurrency}</option>

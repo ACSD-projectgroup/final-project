@@ -7,6 +7,7 @@ import Logo from '../assets/Coin.png'
 
 function Navigation() {
     return (
+        //bootstrap nav bar used for navigation
         <Navbar expand="lg" className="navbar  p-3 mb-3 ">
             <Container>
                 <Navbar.Brand href="/"><img src={Logo}></img></Navbar.Brand>
