@@ -106,17 +106,19 @@ function ForexConversion(){
 
             //sort data by date ascending as the api returns data and values unsorted
             const sortedArray=[...formattedTimeSeriesData].sort((a,b)=> a.date > b.date? 1 :-1, );
-          
+         
            
 
             //split pair into 2 arrays for chart
-            const dates = sortedArray.map(date =>date.date);
-            const prices = sortedArray.map(price=>price.value);
+           const dates = sortedArray.map(date =>date.date);
+           const prices = sortedArray.map(price=>price.value);
 
             setTimeSeriesDates(dates);
             setTimeSeriesPrices(prices);
 
-            setGraphCurrency(priceCurrency);            
+            setGraphCurrency(priceCurrency);   
+            console.log("start-date "+ startDate);
+            console.log("end-date: "+ endDate)         
                       
             } catch (error) {
           console.error('Error:', error);
@@ -203,11 +205,7 @@ function ForexConversion(){
         
 
     }
-    //get symbol of currency
-    function getKeyByValue(object, currency){
-        return Object.keys(object).find(key =>object[key] === currency)//https://www.geeksforgeeks.org/how-to-get-a-key-in-a-javascript-object-by-its-value/
-    }
-    
+ 
       
     
     /* function handleBaseCurrency was written to handle the user changing the base
@@ -221,8 +219,16 @@ function ForexConversion(){
     //function handlePriceCurrency will set setPriceCurrency & priceCurrencySymbol
     function handlePriceCurrency(e){
         setpriceCurrency(e.target.value)
-        console.log("price test: " + priceCurrency)
-        setpriceCurrencySymbol(getKeyByValue(currencyTable,e.target.value))
+        //console.log("price test: " + priceCurrency)
+        //console.log("end-date: " + endDate)
+
+        //get symbol of price currency, this will be passed to API to retrieve data 
+        const currencyKeys = Object.keys(currencyTable);
+        const currencyToFind = e.target.value;
+        const priceSymbol = currencyKeys.find(function(key){
+          return currencyTable[key] === currencyToFind; 
+        })
+        setpriceCurrencySymbol(priceSymbol);
         //getTimeSeriesData();
         getlatestPrices();      
     }
@@ -240,8 +246,7 @@ function ForexConversion(){
           setValueToConvert(e.target.value);
         }
         
-        //console.log("test : value to convert") //for debug
-        //console.log("Convert Value: "+ valueToConvert) //for debug
+       
        
     }
 
@@ -312,6 +317,7 @@ return(<div className="container-fluid">
             </div>
     	    
             <div className="row">
+                <div>end date {endDate}</div>
            
 
                 <div className="conversion-container-group">
