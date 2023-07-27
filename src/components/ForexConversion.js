@@ -21,7 +21,6 @@ import forexImage from '../assets/forex_narrow.jpg'
 function ForexConversion(){
     const initialValue = 1;
    
-    const[todaysDate,setTodaysDate] = useState(new Date())//todays date
     const[baseCurrency,setBaseCurrency] = useState("EUR - Euro")//initialise base currency to euro
     const[baseCurrencySymbol,setBaseCurrencySymbol] = useState("EUR") //symbol will be used for api
     const[priceCurrency,setpriceCurrency] = useState("USD - United States Dollar")
@@ -29,17 +28,11 @@ function ForexConversion(){
     const[valueToConvert, setValueToConvert] = useState(initialValue);//value to be converted
     const[graphCurrency, setGraphCurrency] = useState("")
 
-
-    const[convertedValue, setConvertedValue] = useState("")
-    const[timeSeriesData, setTimeSeriesData] = useState([])
     const[latestPrices,setLatestPrices] = useState([])
-    const[exchangeRate, setExchangeRate] = useState([])
-
-
-
+    
     //start and end date of historical prices for linechart
-    const[startDate,setStartDate] = useState("")//hardcoded for debugging&testing
-    const[endDate,setEndDate] = useState("")//hardcoded for debugging&testing
+    const[startDate,setStartDate] = useState("")
+    const[endDate,setEndDate] = useState("")
 
     const[timeSeriesDates,setTimeSeriesDates] = useState([]);
     const[timeSeriesPrices,setTimeSeriesPrices] = useState([])
@@ -49,16 +42,19 @@ function ForexConversion(){
     // Get latest proces and timeseriesdata on loading
     useEffect(() => {
         getlatestPrices();
-        getDate()
-        //getTimeSeriesData();
+        setDates()//set start and end dates for time series data
+        
+      
         
         }, []);
 
-      async function getDate(){
 
-        //set start date to 12 months ago
+      //set dates for the time series request
+       async function setDates(){
+
+        //set start Date to 12 months ago, endDate to todays date
         const todaysDate = new Date();
-        const month = String(todaysDate.getUTCMonth()+1).padStart(2,'0');
+        const month = String(todaysDate.getUTCMonth()+1).padStart(2,'0');//pad result to always give 2 digits for date format
         const year = todaysDate.getFullYear();
         const previousYear = todaysDate.getFullYear()-1;
         const day = String(todaysDate.getUTCDate()).padStart(2,'0')
@@ -73,9 +69,11 @@ function ForexConversion(){
       }
       
       async function getTimeSeriesData() {
+        
+
         try {
 
-          //options for querying api - https://rapidapi.com/principalapis/api/currency-conversion-and-exchange-rates
+      //options for querying api - https://rapidapi.com/principalapis/api/currency-conversion-and-exchange-rates
     
     const timeSeriesOptions= {
         method: 'GET',
@@ -95,20 +93,10 @@ function ForexConversion(){
             
           const response = await axios.request(timeSeriesOptions);
 
-          // following console.log for debugging 
-          console.log("timeSeries: ");
-          console.log(response)
-          console.log("response.data.rates")
-          console.log(response.data.rates);
-          console.log("start date: " + startDate)
-          console.log("end date: " , endDate)
-
-          
-
-         
+            
             // Extract entries from returned object
             var timeSeries = Object.entries(response.data.rates);
-            //localStorage.setItem('timeSeries', JSON.stringify(timeSeries))
+        
             
             // Format the data
             const formattedTimeSeriesData = timeSeries.map(([date, prices]) => ({
@@ -119,8 +107,7 @@ function ForexConversion(){
             //sort data by date ascending as the api returns data and values unsorted
             const sortedArray=[...formattedTimeSeriesData].sort((a,b)=> a.date > b.date? 1 :-1, );
           
-             console.log("SortedArray :")
-             console.log(sortedArray)
+           
 
             //split pair into 2 arrays for chart
             const dates = sortedArray.map(date =>date.date);
@@ -129,20 +116,15 @@ function ForexConversion(){
             setTimeSeriesDates(dates);
             setTimeSeriesPrices(prices);
 
-            setGraphCurrency(priceCurrency);
-
-            
-           
-
-            
+            setGraphCurrency(priceCurrency);            
                       
-          
             } catch (error) {
           console.error('Error:', error);
         }
         
       }
-      const prices = timeSeriesData;
+
+    
       
       //async function retrieves conversion rate from api
       //options for querying api - https://rapidapi.com/principalapis/api/currency-conversion-and-exchange-rates
@@ -178,7 +160,7 @@ function ForexConversion(){
           }
        
       }
-      //variable to for exchange rate , I found using a setState resulted in a delay 
+      //variable exchangeR for exchange rate , I found using a setState resulted in a delay 
       // updating the converted currency value
       const exchangeR = latestPrices[priceCurrencySymbol];
  
@@ -232,24 +214,17 @@ function ForexConversion(){
     currency, however it was found this api only provides a base currency of euro
     */
     function handleBaseCurrency(e){
-        e.preventDefault()
-        
-     
+        e.preventDefault()  
         getlatestPrices();
-  
-
     }
 
     //function handlePriceCurrency will set setPriceCurrency & priceCurrencySymbol
     function handlePriceCurrency(e){
-
-    
         setpriceCurrency(e.target.value)
         console.log("price test: " + priceCurrency)
         setpriceCurrencySymbol(getKeyByValue(currencyTable,e.target.value))
         //getTimeSeriesData();
-        getlatestPrices();
-      
+        getlatestPrices();      
     }
 
 
@@ -267,7 +242,7 @@ function ForexConversion(){
         
         //console.log("test : value to convert") //for debug
         //console.log("Convert Value: "+ valueToConvert) //for debug
-        //setConvertedValue(exchangeRate * valueToConvert) 
+       
     }
 
    
@@ -309,25 +284,19 @@ function ForexConversion(){
             }
         },
     
-        xAxis: {
+        xAxis: {categories:timeSeriesDates,
            
             //type: 'datetime',
             //labels:{format: '{value:%Y-%m-%d}'},
         },
-      
+        
     
     
     
     
         series:[{
             data: timeSeriesPrices,
-          }],/* [ {
-
-
-            name: 'Manufacturing',
-            data: [24916, 37941, 29742, 29851, 32490, 30282,
-                38121, 36885, 33726, 34243, 31050]
-        },],*/
+          }],
     
         responsive: {
             rules: [{
