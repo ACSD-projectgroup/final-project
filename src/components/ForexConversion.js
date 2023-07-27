@@ -5,7 +5,7 @@ Course : HDip in Web development
 Module: Advanced client side development
 
 component description:
-This component will convert price in euro to diferent currencies selected by the euro, this 
+This component will convert price in euro to diferent currencies selected by the user, this 
 component will also display 12 months of historical data for the price currency
 There is a limitation in the api that only allows a base currency of euro for the free subscription
 */
@@ -19,7 +19,7 @@ import LineChart from 'highcharts-react-official'
 import forexImage from '../assets/forex_narrow.jpg'
 
 function ForexConversion(){
-    const initialValue = 1;
+    const initialValue = 1;//initial value to convert
    
     const[baseCurrency,setBaseCurrency] = useState("EUR - Euro")//initialise base currency to euro
     const[baseCurrencySymbol,setBaseCurrencySymbol] = useState("EUR") //symbol will be used for api
@@ -127,7 +127,7 @@ function ForexConversion(){
     
       
       //async function retrieves conversion rate from api
-      //options for querying api - https://rapidapi.com/principalapis/api/currency-conversion-and-exchange-rates
+      //options for querying api code example - https://rapidapi.com/principalapis/api/currency-conversion-and-exchange-rates
       async function getlatestPrices() {
         const requestOptions= {
             method: 'GET',
