@@ -1,5 +1,5 @@
 /*
-Component:Aricles.js
+Component:Cryptonews.js
 Student: Denis O Regan
 Course : HDip in Web development
 Module: Advanced client side development

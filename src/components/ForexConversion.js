@@ -1,5 +1,5 @@
 /*
-Component:Aricles.js
+Component:ForexConversion.js
 Student: Denis O Regan
 Course : HDip in Web development
 Module: Advanced client side development
@@ -257,14 +257,6 @@ function ForexConversion(){
         console.log(" ")
     }
 
-    
-
-
-
-
-
-
-   
     //Line chart Configuration
       const graphConfig= {
 
@@ -284,16 +276,8 @@ function ForexConversion(){
             }
         },
     
-        xAxis: {categories:timeSeriesDates,
-           
-            //type: 'datetime',
-            //labels:{format: '{value:%Y-%m-%d}'},
-        },
-        
-    
-    
-    
-    
+        xAxis: {categories:timeSeriesDates,            
+        }, 
         series:[{
             data: timeSeriesPrices,
           }],
