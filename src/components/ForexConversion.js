@@ -26,22 +26,22 @@ function ForexConversion(){
     const[priceCurrency,setpriceCurrency] = useState("USD - United States Dollar")
     const[priceCurrencySymbol,setpriceCurrencySymbol] = useState("USD")
     const[valueToConvert, setValueToConvert] = useState(initialValue);//value to be converted
-    const[graphCurrency, setGraphCurrency] = useState("")
+    const[graphCurrency, setGraphCurrency] = useState("") //to update currency on line chart
 
-    const[latestPrices,setLatestPrices] = useState([])
+    const[latestPrices,setLatestPrices] = useState([]) //latest currency prices
     
     //start and end date of historical prices for linechart
     const[startDate,setStartDate] = useState("")
     const[endDate,setEndDate] = useState("")
 
-    const[timeSeriesDates,setTimeSeriesDates] = useState([]);
-    const[timeSeriesPrices,setTimeSeriesPrices] = useState([])
+    const[timeSeriesDates,setTimeSeriesDates] = useState([]);//for charting dates
+    const[timeSeriesPrices,setTimeSeriesPrices] = useState([])//for charting prices
 
 
 
     // Get latest proces and timeseriesdata on loading
     useEffect(() => {
-        getlatestPrices();
+        getlatestPrices(); //get latest currency prices
         setDates()//set start and end dates for time series data
         
       
@@ -317,7 +317,7 @@ return(<div className="container-fluid">
             </div>
     	    
             <div className="row">
-                <div>end date {endDate}</div>
+                
            
 
                 <div className="conversion-container-group">
@@ -340,7 +340,7 @@ return(<div className="container-fluid">
                                     <option key={index}>{currency}</option>
                                 ))}
                             </select>
-                            <input className ="conversion-input" type="number" value={valueToConvert*exchangeR} onChange={()=> {}} />
+                            <input className ="conversion-input" type="number" value={valueToConvert*exchangeR}  />
 
                         </div>
                         
